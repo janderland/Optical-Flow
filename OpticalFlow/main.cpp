@@ -15,7 +15,7 @@ using namespace std;
 using namespace cv;
 
 // General settings
-#define Z_DEPTH 1.0f // cm
+#define Z_DEPTH 133.4f // cm
 #define FOCAL_LENGTH .00342f // cm
 #define LENGTH_PER_PIXEL 0.0000049f // cm
 #define ITERATIONS_PER_SEED 5
@@ -87,6 +87,11 @@ int main(int argc, const char * argv[]) {
                             SHITOMASI_MIN_DISTANCE,
                             noArray(),
                             SHITOMASI_BLOCK_SIZE);
+        
+        // If we didn't get get feature to track, try again
+        if (old_p.size() == 0) {
+            continue;
+        }
        
 #ifdef OPTFLOW_DISPLAY
         // Reset the mask
@@ -95,6 +100,7 @@ int main(int argc, const char * argv[]) {
 
         // Track these corners over the next few frames
         for (int i=0; i<ITERATIONS_PER_SEED; i++) {
+            
             // Get a new frame
             cap >> cur_frame;
             cvtColor(cur_frame, cur_fgray, CV_BGR2GRAY);
