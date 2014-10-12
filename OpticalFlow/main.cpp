@@ -15,9 +15,10 @@ using namespace std;
 using namespace cv;
 
 // General settings
-#define DEFAULT_Z_DEPTH 1.0f
-#define DEFAULT_FOCAL_LENGTH 1.0f
-#define ITERATIONS_PER_SEED 1
+#define Z_DEPTH 1.0f // cm
+#define FOCAL_LENGTH .00342f // cm
+#define LENGTH_PER_PIXEL 0.0000049f // cm
+#define ITERATIONS_PER_SEED 5
 
 // Display settings
 // Defining "OPTFLOW_DISPLAY" (#define OPTFLOW_DISPLAY) enables graphical output for this application. This normally shouldn't be done in the source code but rather done in the IDE or Makefile as to not interfere with different build methods.
@@ -38,7 +39,7 @@ using namespace cv;
 #define LUCASKANAD_MAX_LEVEL 2
 
 const Scalar color(OVERLAY_COLOR_B, OVERLAY_COLOR_G, OVERLAY_COLOR_R);
-const float multiplier = DEFAULT_Z_DEPTH / DEFAULT_FOCAL_LENGTH;
+const double multiplier = (Z_DEPTH / FOCAL_LENGTH) * LENGTH_PER_PIXEL;
 
 int main(int argc, const char * argv[]) {
     // The change in position of the camera
